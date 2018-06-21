@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>简单聊天</title>
+    <link href="lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="container ">
+        <div id="myAlert" class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>Hi!</strong>欢迎来到简单聊天室。
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><a href="#">聊天板</a> </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="pre-scrollable">
+                            <ul id="messagesList" style="height:340px"></ul>
+                        </div>
+
+
+                    </div>
+                    <div class="panel-footer">
+                        <input type="text" id="userName" placeholder="用户名" />
+                        <input type="text" id="message" name="message" value="" placeholder="在此输入需要发送的消息" />
+                        <button class="btn btn-info navbar-btn" type="button" id="sendBtn">发送</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+  
+  
+    <script src="lib/signalr/signalr.js"></script>
+    <script type="text/javascript">
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/myChatHub")
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+        connection.start().catch(err => console.error(err.toString()));
+        //定义方法使用connection.on方法来接收返回数据
+        connection.on("SendMessage", (user, message) => {
+            const encodedMsg = user + " 说：" + message;
+            const li = document.createElement("li");
+            li.textContent = encodedMsg;
+            document.getElementById("messagesList").appendChild(li);
+        });
+
+        document.getElementById("sendBtn").addEventListener("click", function () {
+            var user = document.getElementById('userName').value;
+            var message = document.getElementById('message').value;
+            //从客户端中调用在此调用之前在自定义Hub定义的SendMessage方法
+            connection.invoke("SendMessage", user, message).catch(err => console.error(err.toString()));
+        });
+    </script>
+</body>
+</html>
