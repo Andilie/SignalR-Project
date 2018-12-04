@@ -30,3 +30,5 @@ C:\Users\Ziche\source\repos\SignalRChat.Beginner1.0\SignalRChat.Beginner1.0\obj\
 C:\Users\Ziche\source\repos\SignalRChat.Beginner1.0\SignalRChat.Beginner1.0\obj\Debug\netcoreapp2.1\SignalRChat.Beginner1.0.pdb
 C:\Users\Ziche\source\repos\SignalRChat.Beginner1.0\SignalRChat.Beginner1.0\obj\Debug\netcoreapp2.1\SignalRChat.Beginner1.0.csproj.CopyComplete
 C:\Users\Ziche\source\repos\SignalRChat.Beginner1.0\SignalRChat.Beginner1.0\obj\Debug\netcoreapp2.1\SignalRChat.Beginner1.0.csprojAssemblyReference.cache
+E:\Github\SignalR-Project\SignalR-Beginners\SignalRChat.Beginner1.0\obj\Debug\netcoreapp2.1\SignalRChat.Beginner1.0.dll
+E:\Github\SignalR-Project\SignalR-Beginners\SignalRChat.Beginner1.0\obj\Debug\netcoreapp2.1\SignalRChat.Beginner1.0.pdb
