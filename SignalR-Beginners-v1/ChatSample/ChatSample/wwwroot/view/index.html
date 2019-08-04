@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="../lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 " style="margin:100px auto">
+                <div class="card" style="height:430px">
+                    <div class="card-header bg-primary text-white">简单聊天室</div>
+                    <div class="card-body pre-scrollable">
+                        <ul id="messagesList">
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <div class="input-group mb-3">
+                            <input id="userName" type="text" class="form-control" placeholder="用户名">
+                            <input id="userMessage" type="text" class="form-control" placeholder="在此输入要发送的消息">
+                            <div class="input-group-prepend">
+                                <button id="sendBtn" class="btn btn-primary">发送</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../lib/signalr/signalr.js"></script>
+<script type="text/javascript">
+    let connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+    connection.start().catch(err => console.error(err.toString()));
+    connection.on("ReceiveMessage", function (user, message, date) {
+        var msg = message
+        var encodedMsg ='<a href="javascript:void(0);">'+ user +"</a>"+ "于" + date + " 说 " + msg;
+        var li = document.createElement("li");
+        li.innerHTML = encodedMsg;
+        document.getElementById("messagesList").appendChild(li);
+    });
+    document.getElementById("sendBtn").addEventListener("click", function (event) {
+    var user = document.getElementById("userName").value;
+    var message = document.getElementById("userMessage").value;
+    connection.invoke("SendMessage", user, message).catch(function (err) {
+        return console.error(err.toString());
+    });
+    event.preventDefault();
+});
+</script>
+</html>
